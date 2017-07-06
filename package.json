@@ -1,0 +1,32 @@
+{
+  "name": "pennybox-nodejs-test-task",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "description": "Node.js test task for candidate to backend developer position in PennyBox",
+  "repository": "git@github.com:spy4x/pennybox-nodejs-test-task.git",
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=development nodemon src/index.js",
+    "test": "NODE_ENV=test mocha src/**/*.spec.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "composable-middleware": "^0.3.0",
+    "compression": "^1.6.2",
+    "errorhandler": "^1.5.0",
+    "express": "^4.13.3",
+    "lodash": "^4.17.4",
+    "method-override": "^2.3.7",
+    "mongoose": "^4.7.6",
+    "q": "^1.5.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
+    "supertest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=7.6.0"
+  }
+}
