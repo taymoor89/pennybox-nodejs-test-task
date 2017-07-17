@@ -88,4 +88,48 @@ describe('user.controller', () => {
         });
     });
   });
+
+  describe('[POST] /users', () => {
+    let payload = null;
+
+    beforeEach(() => {
+      payload = {
+        name: 'Anton',
+        role: 'admin'
+      };
+    });
+
+    afterEach(async () => {
+      await UserModel.remove({_id: payload._id});
+    });
+
+    it('Should add new user', () => {
+      return request(app)
+        .post('/users')
+        .send(payload)
+        .expect(201)
+        .expect((response) => {
+          let {body}  = response;
+          delete body.__v;
+          payload._id = body._id;
+          assert.deepEqual(body, payload);
+        });
+    });
+
+    it('Should complain if name is not provided', () => {
+      delete payload.name;
+      return request(app)
+        .post('/users')
+        .send(payload)
+        .expect(500);
+    });
+
+    it('Should complain if role is not provided', () => {
+      delete payload.role;      
+      return request(app)
+        .post('/users')
+        .send(payload)
+        .expect(500);
+    });
+  });
 });

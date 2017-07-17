@@ -27,11 +27,26 @@ class UserController {
     }
     catch (error) {
       next(error);
-        }
+    }
   }
 
-  static create (req, res) {
-    // TODO: Write implementation here
+  static async create (req, res, next) {
+    let {name, role} = req.body;
+    
+    if(!name) return next(new Error('Name not provided'));
+    if(!role) return next(new Error('Role not provided'));
+
+    try {
+      let doc   = {name, role};
+      let user  = await UserModel.create(doc);
+
+      res
+        .status(201)
+        .json(user);
+    }
+    catch (error){
+      next(error);
+    }
   }
 
 }
