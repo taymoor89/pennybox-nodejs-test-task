@@ -10,6 +10,10 @@ const UserSchema = new Mongoose.Schema({
     type: String,
     trim: true,
     required: true
+  },
+  device: {
+    type: String,
+    trim: true
   }
 });
 

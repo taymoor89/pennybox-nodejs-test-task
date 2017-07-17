@@ -1,32 +1,18 @@
-const UserSchema = require('./user.model');
+let UserSchema = require('./user.model');
 
-function addDevice (params, done) {
-  // TODO: Refactor and rewrite me, I'm bad function!
-  if(!params.userId){
-    return done({success: false, message: 'No userId provided'})
+async function addDevice (params) {
+  const {userId, deviceId} = params;
+
+  if(!userId) return new Error('No userId provided');
+  if(!deviceId) return new Error('Missing deviceId');
+
+  try {
+    await UserSchema.findByIdAndUpdate(userId, {deviceId});
+    return 'Device has been added';
   }
-  if(!params.deviceId){
-    return done({success: false, message: 'Missing deviceId'})
+  catch(error) {
+    return error; 
   }
-
-  UserSchema
-    .find({_id: params.userId})
-    .then(function(user){
-      if(!user[0]){
-        return done({success: false, message: 'User doesn\'t exist.'});
-      }
-
-      UserSchema
-        .update(
-          {_id: params.userId},
-          {deviceId: params.deviceId}
-        )
-        .then(function(){
-          return done({success: true, message: 'Device assigned to user'});
-        }, function(err){
-          return done({success: false, message: err});
-        });
-    });
 }
 
 module.exports = addDevice;
